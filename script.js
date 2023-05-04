@@ -1,5 +1,7 @@
 import bridge from '@vkontakte/vk-bridge';
 
+bridge.send("VKWebAppInit", {});
+
 let canvas = document.getElementById("gameCanvas");
 let ctx = canvas.getContext("2d");
 
@@ -17,7 +19,7 @@ let direction = 1;
 let overlay = document.getElementById("overlay");
 let overlayButton = document.getElementById("overlay-button");
 
-bridge.send("VKWebAppInit", {});
+
 
 function drawSnake() {
   ctx.fillStyle = "green";
