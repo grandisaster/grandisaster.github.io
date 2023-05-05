@@ -1,17 +1,15 @@
-import Phaser from 'phaser';
-
 export function keyUpCallback(event) {
-    switch(event.key) {
-        case "w":
+    switch(event.code) {
+        case "KeyW":
             this.background.y += 10;
             break;
-        case "a":
+        case "KeyA":
             this.background.x += 10;
             break;
-        case "s":
+        case "KeyS":
             this.background.y -= 10;
             break;
-        case "d":
+        case "KeyD":
             this.background.x -= 10;
             break;
     }
