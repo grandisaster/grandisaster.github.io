@@ -19,12 +19,13 @@ const Game = () => {
     };
 
     function preload() {
-      // Preload assets
-    }
+	  this.load.image('background', 'background.jpg'); 
+	}
 
-    function create() {
-      // Create game objects
-    }
+	function create() {
+	  // Add the background image
+	  this.add.image(0, 0, 'background').setOrigin(0, 0);
+	}
 
     function update() {
       // Game logic updates
