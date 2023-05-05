@@ -1,6 +1,8 @@
 import bridge from '@vkontakte/vk-bridge';
 import React, { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
+import preloadScene from './scenes/preloadScene';
+import mainScene from './scenes/mainScene';
 
 const Game = () => {
   const gameRef = useRef(null);
@@ -11,29 +13,11 @@ const Game = () => {
       parent: gameRef.current, 
       width: 800,
       height: 600,
-      scene: {
-        preload: preload,
-        create: create,
-        update: update,
-      },
+      scene: [preloadScene, mainScene],
     };
 
-    function preload() {
-	  this.load.image('background', 'background.jpg'); 
-	}
+    const game = new Phaser.Game(config);
 
-	function create() {
-	  // Add the background image
-	  this.add.image(0, 0, 'background').setOrigin(0, 0);
-	}
-
-    function update() {
-      // Game logic updates
-    }
-
-    new Phaser.Game(config);
-
-    // Clean up Phaser game instance
     return () => {
       gameRef.current.innerHTML = '';
     };
