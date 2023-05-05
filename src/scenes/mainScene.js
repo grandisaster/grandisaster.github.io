@@ -14,7 +14,7 @@ export default class MainScene extends Phaser.Scene {
         this.background = this.add.image(400, 300, 'background');
         this.background.setScale(0.625);
 
-        this.input.keyboard.on('keyup', keyUpCallback, this);
+        this.input.keyboard.on('keydown', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 }
