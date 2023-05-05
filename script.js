@@ -1,4 +1,4 @@
-import bridge from '@vkontakte/vk-bridge';
+import bridge from './node_modules/@vkontakte/vk-bridge';
 
 bridge.send("VKWebAppInit", {});
 
