@@ -15,7 +15,7 @@ function LoadingScreen({ onLoaded }) {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 2000);
     }, []);
 
 
