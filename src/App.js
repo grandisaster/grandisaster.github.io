@@ -1,4 +1,4 @@
-import bridge from '@vkontakte/vk-bridge';
+import Data from './services/service';
 import React, { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import preloadScene from './scenes/preloadScene';
@@ -39,7 +39,8 @@ const Game = () => {
 };
 
 function App() {
-  bridge.send("VKWebAppInit", {});
+  let d = new Data();
+  d.sendBridge()
   return (
     <div className="App">
       <Game />
