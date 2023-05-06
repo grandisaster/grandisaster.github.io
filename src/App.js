@@ -1,4 +1,4 @@
-import bridge from '@vkontakte/vk-bridge';
+import Data from './services/service';
 import React, { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import mainScene from './scenes/mainScene';
@@ -29,7 +29,7 @@ const Game = ({ setIsGame }) => {
         enable: true,
         tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
       },
-      scene: [mainScene],
+      scene: [preloadScene, mainScene],
       physics: {
           default: 'arcade',
           arcade: {
@@ -66,7 +66,8 @@ const Game = ({ setIsGame }) => {
 export { Game } ;
 
 function App() {
-  bridge.send("VKWebAppInit", {});
+  let d = new Data();
+  d.sendBridge()
   const [isLoaded, setIsLoaded] = useState(false); 
   const [isGame, setIsGame] = useState(false);
 
@@ -82,7 +83,5 @@ function App() {
       return <LoadingScreen onLoaded={() => setIsLoaded(true)} />;
     }
   }
-
-  
 
 export default App ;
