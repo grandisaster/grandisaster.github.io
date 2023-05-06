@@ -1,3 +1,5 @@
+import Hero from "../../classes/hero/Hero";
+
 const speed = 160;
 let currentBooster = 1;
 
@@ -12,29 +14,42 @@ export function keyDownCallback(event) {
 
     let currentSpeed = currentBooster * speed;
 
+
     switch (event.code) {
         case "KeyW":
+          if (this.character.body.velocity.y === 0) {
             this.character.setVelocityY(-currentSpeed);
-            break;
+          }
+          break;
         case "KeyA":
+          if (this.character.body.velocity.x === 0) {
             this.character.setVelocityX(-currentSpeed);
-            break;
+          }
+          break;
         case "KeyS":
-            console.log(event);
+          if (this.character.body.velocity.y === 0) {
             this.character.setVelocityY(currentSpeed);
-            break;
+          }
+          break;
         case "KeyD":
+          if (this.character.body.velocity.x === 0) {
             this.character.setVelocityX(currentSpeed);
-            break;
+          }
+          break;
         case "ShiftLeft":
-            if(currentBooster !== 1.5) {
-                const velocity_x = this.character.body.velocity.x,
-                    velocity_y = this.character.body.velocity.y;
-                this.character.setVelocity(velocity_x / currentBooster * 1.5, velocity_y / currentBooster * 1.5);
-                currentBooster = 1.5;
-            }
-            break;
-    }
+          if (currentBooster !== 1.5) {
+            const velocity_x = this.character.body.velocity.x,
+              velocity_y = this.character.body.velocity.y;
+            this.character.setVelocity(velocity_x / currentBooster * 1.5, velocity_y / currentBooster * 1.5);
+            currentBooster = 1.5;
+          }
+          break;
+        //   case "KeyE":
+        //   if (this.character.body.velocity.y === 0) {
+        //     this.character.setVelocityY(-currentSpeed);
+        //   }
+        //   break;
+        }
 }
 
 export function keyUpCallback(event) {
