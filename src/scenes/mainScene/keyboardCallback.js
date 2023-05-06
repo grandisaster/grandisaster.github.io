@@ -7,20 +7,16 @@ export function keyDownCallback(event) {
 
     switch (event.code) {
         case "KeyW":
-            this.moving_vector.y = -1
-            this.character.anims.stop();
-            this.character.anims.play('walk-back', true);
+            if(this.onEarth === true || (this.onEarth === false && this.jumps == 1)) {
+                this.moving_vector.y = -1.4
+                this.jumps += 1;
+            }
             break;
         case "KeyA":
             this.moving_vector.x = -1
             this.character.anims.stop();
             this.character.flipX = true;
             this.character.anims.play('walk-right', true);
-            break;
-        case "KeyS":
-            this.moving_vector.y = 1
-            this.character.anims.stop();
-            this.character.anims.play('walk-up', true);
             break;
         case "KeyD":
             this.moving_vector.x = 1
@@ -31,41 +27,23 @@ export function keyDownCallback(event) {
         case "ShiftLeft":
             this.booster = 2
             break;
-        default:
-            console.log("Eta default")
     }
-
-    console.log(event.code, " DOWN ", this.booster)
 }
 
 export function keyUpCallback(event) {
     // event.preventDefault();
     switch (event.code) {
-        case "KeyW":
-            this.moving_vector.y = 0
-            if(!this.moving()) {
-                this.character.anims.stop();
-                this.character.anims.play('look-down', true);
-            }
-            break;
         case "KeyA":
             this.moving_vector.x = 0
-            if(!this.moving()) {
+            if(!this.moving_x()) {
                 this.character.anims.stop();
                 this.character.flipX = true;
                 this.character.anims.play('look-right', true);
             }
             break;
-        case "KeyS":
-            this.moving_vector.y = 0
-            if(!this.moving()) {
-                this.character.anims.stop();
-                this.character.anims.play('look-up', true);
-            }
-            break;
         case "KeyD":
             this.moving_vector.x = 0
-            if(!this.moving()) {
+            if(!this.moving_x()) {
                 this.character.anims.stop();
                 this.character.flipX = false;
                 this.character.anims.play('look-right', true);
@@ -74,9 +52,5 @@ export function keyUpCallback(event) {
         case "ShiftLeft":
             this.booster = 1
             break;
-        default:
-            console.log("Eta default")
-    }
-
-    console.log(event.code, " UP ", this.moving_vector, this.booster)
+    }   
 }

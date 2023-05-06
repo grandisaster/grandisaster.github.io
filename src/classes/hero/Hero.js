@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Hero extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, health=100, damage=33) {
       super(scene, x, y, texture);
       // this.body = new Phaser.Physics.Arcade.Body(scene, this);
@@ -28,5 +28,3 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
   }
-  
-  export default Player;

@@ -8,8 +8,8 @@ export default class MainScene extends Phaser.Scene {
         super({key: 'MainScene'})
     }
 
-    moving() {
-        return this.moving_vector.x !== 0 || this.moving_vector.y !== 0;
+    moving_x() {
+        return this.moving_vector.x !== 0;
     }
 
     preload() {
@@ -45,6 +45,7 @@ export default class MainScene extends Phaser.Scene {
         this.input.keyboard.on('keyup', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
         this.character.flipX = true;
+        this.jumps = 0;
 
     }
 
@@ -65,6 +66,12 @@ export default class MainScene extends Phaser.Scene {
         const speed = 200;
         // console.log(time, this.moving_vector)
         this.character.setVelocity(this.moving_vector.x * speed * this.booster,
-            this.moving_vector.y * speed * this.booster);
+            this.moving_vector.y * speed * 5);
+
+        if(Math.abs(this.moving_vector.y - 0.5) > 0.00001) {
+            this.moving_vector.y += 0.1;
+        } else {
+            this.jumps = 0;
+        }
     }
 }
