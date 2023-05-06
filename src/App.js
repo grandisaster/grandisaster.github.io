@@ -33,21 +33,19 @@ const Game = () => {
       });
 	  }
 
-    function create() {
-      // Add the background image
+    function create() {  
       this.add.image(0, 0, 'background').setOrigin(0, 0);
-
       this.character = this.physics.add.sprite(200, 400, 'character');
-      this.physics.world.gravity.y = 0;
+
+      this.character.setScale(5)
       this.character.setVelocityX(0);
       this.character.setVelocityY(0);
       this.character.setAccelerationX(0); 
       this.character.setAccelerationY(0); 
-
-      this.character.setScale(5)
+      
+      this.physics.world.gravity.y = 0;
 
       this.cursors = this.input.keyboard.createCursorKeys();
-
     }
 
     function update() {
@@ -60,29 +58,29 @@ const Game = () => {
       this.character.y = Phaser.Math.Clamp(this.character.y, minY, maxY);
       
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') {
+        if (event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') {
           this.character.setVelocityX(-160);
-        } else if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
+        } else if (event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') {
           this.character.setVelocityX(160);
         }
       
-        if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'W') {
+        if (event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') {
           this.character.setVelocityY(-160);
-        } else if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') {
+        } else if (event.key === 'ArrowDown' || event.key.toLowerCase() === 's') {
           this.character.setVelocityY(160);
         }
       });
       
       document.addEventListener('keyup', (event) => {
-        if ((event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'A') && !event.repeat) {
+        if ((event.key === 'ArrowLeft' || event.key.toLowerCase() === 'a') && !event.repeat) {
           this.character.setVelocityX(0);
-        } else if ((event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') && !event.repeat) {
+        } else if ((event.key === 'ArrowRight' || event.key.toLowerCase() === 'd') && !event.repeat) {
           this.character.setVelocityX(0);
         }
       
         if ((event.key === 'ArrowUp' || event.key.toLowerCase() === 'w') && !event.repeat) {
           this.character.setVelocityY(0);
-        } else if ((event.key === 'ArrowDown' || event.key === 's' || event.key === 'S') && !event.repeat) {
+        } else if ((event.key === 'ArrowDown' || event.key.toLowerCase() === 's') && !event.repeat) {
           this.character.setVelocityY(0);
         }
       });
