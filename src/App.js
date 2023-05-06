@@ -1,6 +1,8 @@
 import bridge from '@vkontakte/vk-bridge';
 import React, { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
+import preloadScene from './scenes/preloadScene';
+import mainScene from './scenes/mainScene';
 
 const Game = () => {
   const gameRef = useRef(null);
@@ -9,30 +11,20 @@ const Game = () => {
     const config = {
       type: Phaser.AUTO,
       parent: gameRef.current, 
-      width: 800,
-      height: 600,
-      scene: {
-        preload: preload,
-        create: create,
-        update: update,
-      },
+      width: 1200,
+      height: 720,
+      scene: [preloadScene, mainScene],
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 0 },
+                debug: false
+            }
+        }
     };
 
-    function preload() {
-      // Preload assets
-    }
+    const game = new Phaser.Game(config);
 
-    function create() {
-      // Create game objects
-    }
-
-    function update() {
-      // Game logic updates
-    }
-
-    new Phaser.Game(config);
-
-    // Clean up Phaser game instance
     return () => {
       gameRef.current.innerHTML = '';
     };
