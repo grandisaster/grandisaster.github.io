@@ -18,7 +18,7 @@ const Game = () => {
         enable: true,
         tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
       },
-      scene: [mainScene],
+      scene: [preloadScene, mainScene],
       physics: {
           default: 'arcade',
           arcade: {
