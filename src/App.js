@@ -11,9 +11,16 @@ const Game = () => {
     const config = {
       type: Phaser.AUTO,
       parent: gameRef.current, 
-      width: 800,
-      height: 600,
+      width: 1200,
+      height: 720,
       scene: [preloadScene, mainScene],
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 0 },
+                debug: false
+            }
+        }
     };
 
     const game = new Phaser.Game(config);
