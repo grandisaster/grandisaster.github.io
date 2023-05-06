@@ -9,9 +9,15 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'bg/background.jpg');
         this.load.image('menuButton', 'bg/menuButton.png'); 
+        this.load.image('background', 'assets/locations/Backgrounds/background_castle.jpg');
+        this.load.image('c_ground', 'assets/locations/Castle/ground.png');
+        this.load.image('c_walls', 'assets/locations/Castle/walls.png');
+        this.load.image('c_environment', 'assets/locations/Castle/environment.png');
+        this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
         
+        this.load.tilemapTiledJSON('tilemap', 'assets/locations/Castle/castle_map.json');
+
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 32,
             frameHeight: 48,
@@ -19,7 +25,6 @@ export default class MainScene extends Phaser.Scene {
             spacing: 1
         });
       
-
     }
 
     create() {
@@ -28,8 +33,22 @@ export default class MainScene extends Phaser.Scene {
         this.character = this.physics.add.sprite(200, 400, 'character');
         this.character.setScale(4);
         this.character.setCollideWorldBounds(true);
-        // set normal collider
         this.character.body.setSize(16, 32);
+
+        const map = this.make.tilemap({ key: 'tilemap' });
+        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground');
+        const wall_lyr = map.addTilesetImage('castle_walls', 'c_walls');
+        const env_obj_lyr = map.addTilesetImage('env_objects', 'c_env_ojb');
+        const env_lyr = map.addTilesetImage('castle_environment', 'c_environment');
+
+        const wall = map.createLayer('wall_lyr', wall_lyr);
+        const ground = map.createLayer('ground_lyr', ground_lyr);
+        const env_obj = map.createLayer('env_obj_lyr', env_obj_lyr);
+        const env_obj2 = map.createLayer('env_obj_lyr2', env_obj_lyr);
+        const env = map.createLayer('env_lyr', env_lyr);
+
+        ground.setCollisionByProperty({ collides: true });
+        this.matter.world.convertTilemapLayer(ground);
 
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
