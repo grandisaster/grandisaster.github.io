@@ -1,50 +1,86 @@
-import bridge from '@vkontakte/vk-bridge';
-import React, { useEffect, useRef } from 'react';
+import Data from './services/service';
+import React, {useEffect, useRef} from 'react';
 import Phaser from 'phaser';
-import preloadScene from './scenes/preloadScene';
 import mainScene from './scenes/mainScene';
+import PreloadScene from './scenes/preloadScene'
+import LoadingScreen from './LoadingScreen/loading';
+import {useState} from 'react';
+import Menu from './MenuScreen/menu';
 
-const Game = () => {
-  const gameRef = useRef(null);
+const Game = ({setIsGame}) => {
+    const gameRef = useRef(null);
 
-  useEffect(() => {
-    const config = {
-      type: Phaser.AUTO,
-      parent: gameRef.current, 
-      width: 1200,
-      height: 720,
-      pixelArt: true,
-      iso: {
-        enable: true,
-        tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
-      },
-      scene: [mainScene],
-      physics: {
-          default: 'matter',
-          matter: {
-              gravity: { y: 200 },
-              debug: true
-          }
-      }
-    };
+    useEffect(() => {
+        const GAME_WIDTH = 1200;
+        const GAME_HEIGHT = 720;
 
-    const game = new Phaser.Game(config);
+        const config = {
+            type: Phaser.AUTO,
+            parent: gameRef.current,
+            width: GAME_WIDTH,
+            height: GAME_HEIGHT,
+            pixelArt: true,
+            // center
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
 
-    return () => {
-      gameRef.current.innerHTML = '';
-    };
-  }, []);
+            iso: {
+                enable: true,
+                tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
+            },
+            scene: [PreloadScene, mainScene],
+            physics: {
+                default: 'matter',
+                matter: {
+                    gravity: {y: 200},
+                    debug: true
+                }
+            }
+        };
 
-  return <div ref={gameRef} />;
+        const game = new Phaser.Game(config);
+
+        game.events.on('menu', () => {
+            setIsGame(false);
+            console.log('menu');
+        });
+
+
+        return () => {
+            if (gameRef.current === null) {
+                return;
+            } else {
+                gameRef.current.innerHTML = '';
+            }
+
+        };
+    }, []);
+
+    return <div ref={gameRef}/>;
 };
 
+
+export {Game} ;
+
 function App() {
-  bridge.send("VKWebAppInit", {});
-  return (
-    <div className="App">
-      <Game />
-    </div>
-  );
+    let d = new Data();
+    d.sendBridge()
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [isGame, setIsGame] = useState(false);
+
+    const handlePlayButtonClick = () => {
+        setIsGame(true);
+    };
+
+    if (isGame && isLoaded) {
+        return <Game setIsGame={setIsGame}/>;
+    } else if (isLoaded && !isGame) {
+        return <Menu onPlayButtonClick={handlePlayButtonClick}/>;
+    } else {
+        return <LoadingScreen onLoaded={() => setIsLoaded(true)}/>;
+    }
 }
 
 export default App;

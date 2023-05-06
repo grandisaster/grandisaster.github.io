@@ -1,9 +1,17 @@
 import Phaser from 'phaser';
+import Hero from '../classes/hero/Hero'
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
+import {loadAnimations} from "../assets/animations/hero";
+import React from 'react';
+
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({key: 'MainScene'})
+    }
+
+    moving_x() {
+        return this.moving_vector.x !== 0;
     }
 
     preload() {
@@ -14,13 +22,14 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
         
         this.load.tilemapTiledJSON('map', 'assets/locations/Castle/castle_map.json');
-
+this.load.image('menuButton', 'bg/menuButton.png');
         this.load.spritesheet('character', 'character/player.png', {
-            frameWidth: 32,
+            frameWidth: 48,
             frameHeight: 48,
             margin: 1,
             spacing: 1
         });
+
 
     }
 
@@ -58,60 +67,63 @@ export default class MainScene extends Phaser.Scene {
         this.character.body.setSize(16, 32);
         this.physics.world.setBounds(0, 0, 1200, 720);
 
+        this.moving_vector = {
+            x: 0,
+            y: 0
+        };
+        this.booster = 1;
+
+        loadAnimations(this);
 
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.character.flipX = true;
+        this.jumps = 0;
 
-        //addition
 
-        // this.anims.create({
-        //     key: 'walk-right',
-        //     frames: this.anims.generateFrameNumbers('character', {
-        //     frames: [24, 25, 26, 27, 28, 29, 30]}),
-        //     frameRate: 10,
-        //     repeat: -1
-        //   });
-        
-        //   this.anims.create({
-        //     key: 'walk-left',
-        //     frames: this.anims.generateFrameNumbers('character', { start: 4, end: 7 }),
-        //     frameRate: 10,
-        //     repeat: -1
-        //   });
+        this.menuButton = this.add.image(20, 20, 'menuButton').setOrigin(0, 0).setScale(0.05)
 
-        //   this.character.anims.play('walk-right', true);
+            .setInteractive()
+            .on('pointerdown', () => {
+                    this.game.scene.pause('MainScene');
+                    if (window.confirm('Вы уверены, что хотите выйти в меню?')) {
+                        this.game.events.emit('menu');
+                    } else {
+                        this.game.scene.resume('MainScene');
+                    }
+                }
+            );
+
     }
 
-    update() {
+    update(time, delta) {
         const marginTop = 250;
         const marginBottom = 520;
     
         // Get the character's current position
-        const { x, y } = this.character;
-    
+        const {x, y} = this.character;
+
         // Check if the character is within the allowed vertical range
         if (y < marginTop) {
             this.character.setY(marginTop);
         } else if (y > marginBottom) {
             this.character.setY(marginBottom);
         }
-    
-        // Check if the character is on the ground
-        if (this.character.body.touching.down) {
-            // If so, cancel the gravitational pull
-            this.character.setVelocityY(0);
+
+        const speed = 200;
+        // console.log(time, this.moving_vector)
+        this.character.setVelocity(this.moving_vector.x * speed * this.booster,
+            this.moving_vector.y * speed * 5);
+        console.log(this.moving_vector)
+
+        if (Math.abs(this.moving_vector.y - 0.5) > 0.00001 && this.jumps !== 0) {
+            this.moving_vector.y += 0.1;
+        } else {
+            this.jumps = 0;
+            if (this.onEarth) {
+                this.moving_vector.y = 0;
+            }
         }
-    
-        // if (this.cursors.left.isDown) {
-        //     this.character.anims.play('walk-left', true);
-        //   }
-        //   else if (this.cursors.right.isDown) {
-        //     this.character.anims.play('walk-right', true);
-        //   }
-        //   else {
-        //     this.character.setVelocityX(0);
-        //     this.character.anims.stop(); // Stop animation
-        //   }
     }
 }    
