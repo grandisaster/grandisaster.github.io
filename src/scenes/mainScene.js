@@ -1,13 +1,16 @@
 import Phaser from 'phaser';
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
+import React from 'react';
 
-export default class MainScene extends Phaser.Scene {
+
+export default class MainScene extends Phaser.Scene {    
     constructor() {
         super({key: 'MainScene'})
     }
 
     preload() {
         this.load.image('background', 'bg/background.jpg');
+        this.load.image('menuButton', 'bg/menuButton.png'); 
         
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 32,
@@ -15,10 +18,12 @@ export default class MainScene extends Phaser.Scene {
             margin: 1,
             spacing: 1
         });
+      
 
     }
 
     create() {
+        
         this.background = this.add.image(0, 0, 'background').setOrigin(0, 0);
         this.character = this.physics.add.sprite(200, 400, 'character');
         this.character.setScale(4);
@@ -26,27 +31,24 @@ export default class MainScene extends Phaser.Scene {
         // set normal collider
         this.character.body.setSize(16, 32);
 
-
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
-
-        // this.anims.create({
-        //     key: 'walk-right',
-        //     frames: this.anims.generateFrameNumbers('character', {
-        //     frames: [24, 25, 26, 27, 28, 29, 30]}),
-        //     frameRate: 10,
-        //     repeat: -1
-        //   });
         
-        //   this.anims.create({
-        //     key: 'walk-left',
-        //     frames: this.anims.generateFrameNumbers('character', { start: 4, end: 7 }),
-        //     frameRate: 10,
-        //     repeat: -1
-        //   });
+        this.menuButton = this.add.image(20, 20, 'menuButton').setOrigin(0, 0).setScale(0.05)
+        
+        .setInteractive()
+        .on('pointerdown', () => {
+            this.game.scene.stop('MainScene');
+            if (window.confirm('Вы уверены, что хотите выйти в меню?')) {
+                this.game.events.emit('menu');
+            }
+            else {
+                this.game.scene.start('MainScene');
+            }
+        }
+        );
 
-        //   this.character.anims.play('walk-right', true);
     }
 
     update() {
@@ -63,15 +65,5 @@ export default class MainScene extends Phaser.Scene {
             this.character.setY(marginBottom);
         }
 
-        // if (this.cursors.left.isDown) {
-        //     this.character.anims.play('walk-left', true);
-        //   }
-        //   else if (this.cursors.right.isDown) {
-        //     this.character.anims.play('walk-right', true);
-        //   }
-        //   else {
-        //     this.character.setVelocityX(0);
-        //     this.character.anims.stop(); // Stop animation
-        //   }
     }
 }
