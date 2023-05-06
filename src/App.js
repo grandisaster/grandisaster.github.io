@@ -13,14 +13,19 @@ const Game = () => {
       parent: gameRef.current, 
       width: 1200,
       height: 720,
-      scene: [preloadScene, mainScene],
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 0 },
-                debug: false
-            }
-        }
+      pixelArt: true,
+      iso: {
+        enable: true,
+        tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
+      },
+      scene: [mainScene],
+      physics: {
+          default: 'arcade',
+          arcade: {
+              gravity: { y: 0 },
+              debug: false
+          }
+      }
     };
 
     const game = new Phaser.Game(config);
