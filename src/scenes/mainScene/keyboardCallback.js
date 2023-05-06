@@ -2,12 +2,12 @@ import Hero from "../../classes/hero/Hero";
 
 export function keyDownCallback(event) {
     // event.preventDefault();
-    if(event.repeat)
+    if (event.repeat)
         return;
 
     switch (event.code) {
         case "KeyW":
-            if(this.onEarth === true || (this.onEarth === false && this.jumps == 1)) {
+            if (this.onEarth === true || (this.onEarth === false && this.jumps == 1)) {
                 this.moving_vector.y = -1.4
                 this.jumps += 1;
             }
@@ -35,7 +35,7 @@ export function keyUpCallback(event) {
     switch (event.code) {
         case "KeyA":
             this.moving_vector.x = 0
-            if(!this.moving_x()) {
+            if (!this.moving_x()) {
                 this.character.anims.stop();
                 this.character.flipX = true;
                 this.character.anims.play('look-right', true);
@@ -43,7 +43,7 @@ export function keyUpCallback(event) {
             break;
         case "KeyD":
             this.moving_vector.x = 0
-            if(!this.moving_x()) {
+            if (!this.moving_x()) {
                 this.character.anims.stop();
                 this.character.flipX = false;
                 this.character.anims.play('look-right', true);
@@ -52,5 +52,5 @@ export function keyUpCallback(event) {
         case "ShiftLeft":
             this.booster = 1
             break;
-    }   
+    }
 }
