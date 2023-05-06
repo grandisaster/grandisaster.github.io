@@ -1,0 +1,220 @@
+[33mcommit b01c105316169182ab3e45fe51fd4eb274510861[m[33m ([m[1;36mHEAD -> [m[1;32mnick[m[33m, [m[1;31morigin/nick[m[33m)[m
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 21:56:01 2023 +0500
+
+    added map
+
+[33mcommit dfb236eef88bd0cbbef6f719d78c5c9bc439d8b7[m
+Merge: 902c858 aa16400
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 12:48:15 2023 +0500
+
+    Merge remote-tracking branch 'origin/main' into nick
+
+[33mcommit 902c858e346498a90356271a69ade5bdcc68a20d[m
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 12:45:40 2023 +0500
+
+    merge from master
+
+[33mcommit 96fd74951f5fdb0fa426787b01d45a44fde8f5be[m
+Merge: 444deb7 fb5ee4e
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 12:41:37 2023 +0500
+
+    Merge remote-tracking branch 'origin/main' into nick
+
+[33mcommit aa16400f97aabf478745be53162267de2acea5f4[m
+Merge: fb5ee4e 897e0e8
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Sat May 6 10:40:31 2023 +0300
+
+    Merge branch 'yarik'
+
+[33mcommit 897e0e8d43b0f1d7899380ed92d9e172bdbb274a[m
+Author: ryzhy1 <skirlyak2004@mail.ru>
+Date:   Sat May 6 10:25:10 2023 +0300
+
+    class and some moving
+
+[33mcommit 444deb77014f06cd544818e996616d4778f97299[m
+Merge: 70302bf 6626f1e
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 11:00:40 2023 +0500
+
+    Merge remote-tracking branch 'origin/main' into nick
+
+[33mcommit fb5ee4eb5735d6d0f45715e4f95ffba5b23ec596[m
+Merge: 6626f1e 70302bf
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 08:57:18 2023 +0300
+
+    Merge pull request #6 from grandisaster/nick
+    
+    added assets
+
+[33mcommit 70302bf40e07496ff05d2bb78b939463ef11fe1f[m
+Author: Nikita Mazein <namer4666@gmail.com>
+Date:   Sat May 6 10:52:24 2023 +0500
+
+    update
+
+[33mcommit 1cb72f205f4303de62ab39d5fca7ac5fe5dd5d26[m
+Merge: d5cb897 9e23c23
+Author: ryzhy1 <skirlyak2004@mail.ru>
+Date:   Sat May 6 03:37:21 2023 +0300
+
+    Merge branch 'matteo' of https://github.com/grandisaster/grandisaster.github.io into yarik
+
+[33mcommit d5cb89730a24f7e5a2b2b0a678cc2934f06ad7d5[m
+Author: ryzhy1 <skirlyak2004@mail.ru>
+Date:   Sat May 6 03:34:40 2023 +0300
+
+    some beauty
+
+[33mcommit 6626f1ef002b81619d1fed50c82b6b217df38ffc[m
+Merge: 222ffd4 9e23c23
+Author: Matvey Bunos <74353554+g1phy@users.noreply.github.com>
+Date:   Sat May 6 03:25:59 2023 +0300
+
+    Merge pull request #5 from grandisaster/matteo
+    
+    added speed on shift and small fixes
+
+[33mcommit 9e23c23add2804eecdf558223768b77f8b0d1d08[m
+Author: Matvey Bunos <matvey.bunos@gmail.com>
+Date:   Sat May 6 03:25:30 2023 +0300
+
+    added speed on shift and small fixes
+
+[33mcommit 9ffdbeeeabfe0a54eff3a6e01c98d720694774e3[m
+Author: ryzhy1 <skirlyak2004@mail.ru>
+Date:   Sat May 6 02:08:39 2023 +0300
+
+    space limit for character
+
+[33mcommit 222ffd497abf4d3692e6e58fc0a3e9b78a33c76e[m
+Merge: ac2b394 d49cb78
+Author: Matvey Bunos <74353554+g1phy@users.noreply.github.com>
+Date:   Sat May 6 02:06:33 2023 +0300
+
+    Merge pull request #4 from grandisaster/matteo
+    
+    hot fixes
+
+[33mcommit d49cb78b3faad8db3ca66d741cd4c97f90a31a44[m
+Author: Matvey Bunos <matvey.bunos@gmail.com>
+Date:   Sat May 6 02:05:53 2023 +0300
+
+    hot fixes
+
+[33mcommit ac2b394311fc6b4dd3e4a72ca0045e732acf5f5d[m
+Merge: ac4aa25 18038e4
+Author: Matvey Bunos <74353554+g1phy@users.noreply.github.com>
+Date:   Sat May 6 01:59:50 2023 +0300
+
+    Merge pull request #3 from grandisaster/matteo
+    
+    added interactive
+
+[33mcommit 18038e417d10511aef79fa1ed513a46235b4cd9c[m
+Author: Matvey Bunos <matvey.bunos@gmail.com>
+Date:   Sat May 6 01:58:37 2023 +0300
+
+    added interactive
+
+[33mcommit ac4aa2507c24a68693e8f10b892344476b1687d8[m
+Merge: 060e0c7 b4f7de7
+Author: Matvey Bunos <74353554+g1phy@users.noreply.github.com>
+Date:   Fri May 5 22:38:12 2023 +0300
+
+    Merge pull request #2 from grandisaster/matteo
+    
+    Added background
+
+[33mcommit b4f7de74c6c806b3aa4d8b2595bb7165c81f0ab1[m
+Author: Matteo <matvey.bunos@gmail.com>
+Date:   Fri May 5 19:37:25 2023 +0000
+
+    Added background
+
+[33mcommit 060e0c75dd82d10b3dc40fed4607165bf561740f[m
+Merge: 39b4f43 b0af193
+Author: Matvey Bunos <74353554+g1phy@users.noreply.github.com>
+Date:   Fri May 5 22:19:12 2023 +0300
+
+    Merge pull request #1 from grandisaster/matteo
+    
+    updated index.html
+
+[33mcommit b0af19374664104024fc6224678c864c0d15beb3[m
+Author: Matteo <matvey.bunos@gmail.com>
+Date:   Fri May 5 19:18:48 2023 +0000
+
+    updated index.html
+
+[33mcommit 39b4f43d4472261a30f9f0f550d8fec41e4927be[m[33m ([m[1;31morigin/alex[m[33m)[m
+Author: Matteo <matvey.bunos@gmail.com>
+Date:   Fri May 5 19:14:11 2023 +0000
+
+    Updated with react and phaser
+
+[33mcommit 144a182615836d59ad2b4234c192a337d77eb1b1[m
+Author: Matteo <matvey.bunos@gmail.com>
+Date:   Fri May 5 16:50:23 2023 +0000
+
+    Deleted file
+
+[33mcommit a8299f2e54a3fe643d2bc3664a5def31634f199f[m
+Author: Matteo <matvey.bunos@gmail.com>
+Date:   Fri May 5 16:48:49 2023 +0000
+
+    Webpack
+
+[33mcommit 376792fab266c6e3ad2d1e876417c2539e1c407b[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Fri May 5 18:32:31 2023 +0300
+
+    fix
+
+[33mcommit 6727c5835c6b08381a9eb6e7795b368e2b495071[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Fri May 5 18:29:01 2023 +0300
+
+    Update package-lock.json
+
+[33mcommit 94cb8185aaba7a4ca932b3de14d6d862dbdf9fc8[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Fri May 5 18:26:37 2023 +0300
+
+    Update index.html
+
+[33mcommit f01f9c72c775a2b36db38d4960056f76bcb1f037[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Fri May 5 18:23:23 2023 +0300
+
+    fix
+
+[33mcommit 5dbddb6a64d89030928d8f7b3f5efd7ec8a450f7[m[33m ([m[1;31morigin/yaroslav[m[33m, [m[1;31morigin/matt[m[33m)[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Thu May 4 23:49:41 2023 +0300
+
+    fix
+
+[33mcommit 500880734f1e4556062fe3cf79eb8caf72be21a0[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Thu May 4 22:12:48 2023 +0300
+
+    test commit
+
+[33mcommit c510b241b97093669d4f875f818d0f580dedd221[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Thu May 4 22:10:53 2023 +0300
+
+    test commit
+
+[33mcommit 877308771b8899f10cb81ea0c7a539ffa8827cc0[m
+Author: Xenia Tikhonova <tikhonovaxenia@gmail.com>
+Date:   Thu May 4 21:31:05 2023 +0300
+
+    example commit

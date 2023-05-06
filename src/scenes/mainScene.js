@@ -56,6 +56,8 @@ export default class MainScene extends Phaser.Scene {
         this.input.keyboard.on('keyup', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        //addition
+
         // this.anims.create({
         //     key: 'walk-right',
         //     frames: this.anims.generateFrameNumbers('character', {
