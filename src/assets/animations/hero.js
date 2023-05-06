@@ -24,20 +24,20 @@ export function loadAnimations(context) {
         key: 'look-right',
         frames: context.anims.generateFrameNumbers('character', { start: 5, end: 5 }),
         frameRate: 10,
-        repeat: 1
+        repeat: 0
     });
 
     context.anims.create({
         key: 'look-up',
         frames: context.anims.generateFrameNumbers('character', { start: 0, end: 0 }),
         frameRate: 10,
-        repeat: 1
+        repeat: 0
     });
 
     context.anims.create({
         key: 'look-down',
         frames: context.anims.generateFrameNumbers('character', { start: 10, end: 10 }),
         frameRate: 10,
-        repeat: 1
+        repeat: 0
     });
 }
