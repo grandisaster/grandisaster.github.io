@@ -20,10 +20,10 @@ const Game = () => {
       },
       scene: [mainScene],
       physics: {
-          default: 'arcade',
-          arcade: {
+          default: 'matter',
+          matter: {
               gravity: { y: 200 },
-              debug: false
+              debug: true
           }
       }
     };
