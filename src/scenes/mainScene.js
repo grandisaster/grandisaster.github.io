@@ -69,18 +69,6 @@ this.load.image('menuButton', 'bg/menuButton.png');
         this.character.body.setSize(16, 32);
         this.physics.world.setBounds(0, 0, 1200, 720);
 
-        const map = this.make.tilemap({ key: 'tilemap' });
-        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground');
-        const wall_lyr = map.addTilesetImage('castle_walls', 'c_walls');
-        const env_obj_lyr = map.addTilesetImage('env_objects', 'c_env_ojb');
-        const env_lyr = map.addTilesetImage('castle_environment', 'c_environment');
-
-        const wall = map.createLayer('wall_lyr', wall_lyr);
-        const ground = map.createLayer('ground_lyr', ground_lyr);
-        const env_obj = map.createLayer('env_obj_lyr', env_obj_lyr);
-        const env_obj2 = map.createLayer('env_obj_lyr2', env_obj_lyr);
-        const env = map.createLayer('env_lyr', env_lyr);
-
         ground.setCollisionByProperty({ collides: true });
         this.matter.world.convertTilemapLayer(ground);
 
