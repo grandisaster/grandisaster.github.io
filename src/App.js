@@ -2,6 +2,7 @@ import Data from './services/service';
 import React, { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import mainScene from './scenes/mainScene';
+import PreloadScene from './scenes/preloadScene'
 import LoadingScreen from './LoadingScreen/loading';
 import { useState } from 'react';
 import Menu from './MenuScreen/menu';
@@ -29,7 +30,7 @@ const Game = ({ setIsGame }) => {
         enable: true,
         tileZ: 32 // Настройте высоту тайла для контроля эффекта 3D
       },
-      scene: [preloadScene, mainScene],
+      scene: [PreloadScene, mainScene],
       physics: {
           default: 'arcade',
           arcade: {

@@ -86,11 +86,15 @@ export default class MainScene extends Phaser.Scene {
         // console.log(time, this.moving_vector)
         this.character.setVelocity(this.moving_vector.x * speed * this.booster,
             this.moving_vector.y * speed * 5);
+        console.log(this.moving_vector)
 
-        if(Math.abs(this.moving_vector.y - 0.5) > 0.00001) {
+        if(Math.abs(this.moving_vector.y - 0.5) > 0.00001 && this.jumps !== 0) {
             this.moving_vector.y += 0.1;
         } else {
             this.jumps = 0;
+            if(this.onEarth) {
+                this.moving_vector.y = 0;
+            }
         }
     }
 }
