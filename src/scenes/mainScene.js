@@ -1,17 +1,22 @@
 import Phaser from 'phaser';
 import Hero from '../classes/hero/Hero'
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
+import {loadAnimations} from "../assets/animations/hero";
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({key: 'MainScene'})
     }
 
+    moving() {
+        return this.moving_vector.x !== 0 || this.moving_vector.y !== 0;
+    }
+
     preload() {
         this.load.image('background', 'bg/background.jpg');
 
         this.load.spritesheet('character', 'character/player.png', {
-            frameWidth: 32,
+            frameWidth: 48,
             frameHeight: 48,
             margin: 1,
             spacing: 1
@@ -34,11 +39,13 @@ export default class MainScene extends Phaser.Scene {
         };
         this.booster = 1;
 
+        loadAnimations(this);
+
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
-        // this.input.keyboard.on('keydown', (e) => console.log(e), this);
-        // this.input.keyboard.on('keyup', (e) => console.log(e), this);
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.character.flipX = true;
+
     }
 
     update(time, delta) {
