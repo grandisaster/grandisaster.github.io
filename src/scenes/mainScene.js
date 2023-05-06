@@ -30,7 +30,7 @@ export default class MainScene extends Phaser.Scene {
         this.character.setCollideWorldBounds(true);
         // set normal collider
         this.character.body.setSize(16, 32);
-        
+
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -40,7 +40,7 @@ export default class MainScene extends Phaser.Scene {
         .setInteractive()
         .on('pointerdown', () => {
             this.game.scene.stop('MainScene');
-            if (window.confirm('Are you sure you want to go back to menu?')) {
+            if (window.confirm('Вы уверены, что хотите выйти в меню?')) {
                 this.game.events.emit('menu');
             }
             else {
