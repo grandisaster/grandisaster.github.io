@@ -15,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.image('menuButton', 'bg/menuButton.png');
+        this.load.image('menuButton', 'bg/menuButton.png');
         this.load.image('background', 'assets/locations/Backgrounds/background_castle.png');
         this.load.image('c_ground', 'assets/locations/Castle/ground.png');
         this.load.image('c_walls', 'assets/locations/Castle/walls.png');
@@ -58,8 +59,8 @@ export default class MainScene extends Phaser.Scene {
         // this.matter.world.setBounds(0, 0, 1200, 720);
 
 
-        //this.character = this.matter.add.sprite(200, 400, 'character');
-        //this.character.setScale(2)
+        this.character = this.matter.add.sprite(200, 400, 'character');
+        this.character.setScale(2)
         const {width, height} = this.scale;
         this.character = this.matter.add.sprite(360, 600, 'character');
         this.cameras.scrollX = 600;
@@ -73,6 +74,7 @@ export default class MainScene extends Phaser.Scene {
         characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
 
 // Примените границы мира Matter.js
+        this.matter.world.setBounds(0, 0, 1200, 720);
         // this.character.body.setSize(16, 32);
         console.log(this.character.body);
 
@@ -108,8 +110,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const marginTop = 100;
-        const marginBottom = 500;
+        const marginTop = 250;
+        const marginBottom = 520;
 
         // Get the character's current position
         const {x, y} = this.character;
