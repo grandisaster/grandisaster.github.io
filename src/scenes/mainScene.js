@@ -1,5 +1,4 @@
 import Phaser from 'phaser';
-import Hero from '../classes/hero/Hero'
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
 import {loadAnimations} from "../assets/animations/hero";
 import React from 'react';
@@ -15,15 +14,15 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('menuButton', 'bg/menuButton.png'); 
+        this.load.image('menuButton', 'bg/menuButton.png');
         this.load.image('background', 'assets/locations/Backgrounds/background_castle.png');
         this.load.image('c_ground', 'assets/locations/Castle/ground.png');
         this.load.image('c_walls', 'assets/locations/Castle/walls.png');
         this.load.image('c_environment', 'assets/locations/Castle/environment.png');
         this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
-        
+
         this.load.tilemapTiledJSON('map', 'assets/locations/Castle/castle_map.json');
-this.load.image('menuButton', 'bg/menuButton.png');
+        this.load.image('menuButton', 'bg/menuButton.png');
 
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 48,
@@ -37,7 +36,7 @@ this.load.image('menuButton', 'bg/menuButton.png');
 
     create() {
         this.background = this.add.image(0, 0, 'background').setOrigin(0, 0)
-        const map = this.make.tilemap({ key: 'map' })
+        const map = this.make.tilemap({key: 'map'})
         const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground')
         const walls = map.addTilesetImage('castle_walls', 'c_walls')
         const env_obj = map.addTilesetImage('env_objects', 'c_env_ojb')
@@ -50,39 +49,32 @@ this.load.image('menuButton', 'bg/menuButton.png');
         map.createLayer('env_lyr', env)
         const platforms = map.createLayer('platform_lyr', ground_lyr)
 
-        ground.setCollisionByProperty({ collides: true })
-        platforms.setCollisionByProperty({ collides: true })
-        columns.setCollisionByProperty({ collides: true })
+        ground.setCollisionByProperty({collides: true})
+        platforms.setCollisionByProperty({collides: true})
+        columns.setCollisionByProperty({collides: true})
         this.matter.world.convertTilemapLayer(ground)
-        this.matter.world.convertTilemapLayer(platforms)
+        // this.matter.world.convertTilemapLayer(platforms)
         this.matter.world.convertTilemapLayer(columns)
 
 
-
-        // this.character = this.matter.add.sprite(200, 400, 'character');
+        this.character = this.matter.add.sprite(200, 400, 'character');
+        this.character.setScale(2)
         const {width, height} = this.scale;
-        this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
-        this.cameras.scrollX = 200;
-        this.cameras.scrollY = 600;
-        this.character.setScale(4);
-        this.character.setCollideWorldBounds(true);
-        this.character.body.setSize(16, 32);
-        this.physics.world.setBounds(0, 0, 1200, 720);
+        // this.character = this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
+        // this.cameras.scrollX = 200;
+        // this.cameras.scrollY = 600;
+        const characterBody = this.character.body;
 
-        const map = this.make.tilemap({ key: 'tilemap' });
-        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground');
-        const wall_lyr = map.addTilesetImage('castle_walls', 'c_walls');
-        const env_obj_lyr = map.addTilesetImage('env_objects', 'c_env_ojb');
-        const env_lyr = map.addTilesetImage('castle_environment', 'c_environment');
+        characterBody.collisionFilter.category = 1;
+        characterBody.restitution = 0.9;
+        characterBody.friction = 0;
+        characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
 
-        const wall = map.createLayer('wall_lyr', wall_lyr);
-        const ground = map.createLayer('ground_lyr', ground_lyr);
-        const env_obj = map.createLayer('env_obj_lyr', env_obj_lyr);
-        const env_obj2 = map.createLayer('env_obj_lyr2', env_obj_lyr);
-        const env = map.createLayer('env_lyr', env_lyr);
+// Примените границы мира Matter.js
+        this.matter.world.setBounds(0, 0, 1200, 720);
+        // this.character.body.setSize(16, 32);
+        console.log(this.character.body);
 
-        ground.setCollisionByProperty({ collides: true });
-        this.matter.world.convertTilemapLayer(ground);
 
         this.moving_vector = {
             x: 0,
@@ -117,9 +109,10 @@ this.load.image('menuButton', 'bg/menuButton.png');
     update(time, delta) {
         const marginTop = 250;
         const marginBottom = 520;
-    
+
         // Get the character's current position
         const {x, y} = this.character;
+
 
         // Check if the character is within the allowed vertical range
         if (y < marginTop) {
@@ -128,11 +121,10 @@ this.load.image('menuButton', 'bg/menuButton.png');
             this.character.setY(marginBottom);
         }
 
-        const speed = 200;
+        const speed = 2;
         // console.log(time, this.moving_vector)
         this.character.setVelocity(this.moving_vector.x * speed * this.booster,
             this.moving_vector.y * speed * 5);
-        console.log(this.moving_vector)
 
         if (Math.abs(this.moving_vector.y - 0.5) > 0.00001 && this.jumps !== 0) {
             this.moving_vector.y += 0.1;
@@ -143,4 +135,4 @@ this.load.image('menuButton', 'bg/menuButton.png');
             }
         }
     }
-}    
+}
