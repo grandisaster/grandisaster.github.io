@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
+import {mouseCallback} from "./mainScene/mouseCallback";
 import {loadAnimations} from "../assets/animations/hero";
 import Hero from '../classes/hero/Hero';
-import React from 'react';
 
 
 export default class MainScene extends Phaser.Scene {
@@ -59,11 +59,8 @@ export default class MainScene extends Phaser.Scene {
 
         // this.character = this.matter.add.sprite(200, 400, 'character').setFixedRotation()
         this.character = new Hero(this, 200, 400, 'character');
-        this.character.setScale(2)
-        const {width, height} = this.scale;
-        // this.character = this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
-        // this.cameras.scrollX = 200;
-        // this.cameras.scrollY = 600;
+        this.character.setScale(2);
+        this.character.setFixedRotation();
         const characterBody = this.character.body;
 
         characterBody.collisionFilter.category = 1;
@@ -71,27 +68,6 @@ export default class MainScene extends Phaser.Scene {
         characterBody.friction = 0;
         characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
         this.matter.world.setBounds(0, 0, 1200, 720);
-        this.matter.world.on('collisionstart', (event) => {
-            event.pairs.forEach((pair) => {
-                const {bodyA, bodyB} = pair;
-                if ((bodyA === this.character.body && bodyB.isStatic) || (bodyB === this.character.body && bodyA.isStatic)) {
-                    // Check if the character collides with a static body (ground or platform)
-                    this.onEarth = true;
-                    console.log("Yes")
-                }
-            });
-        });
-
-        this.matter.world.on('collisionend', (event) => {
-            event.pairs.forEach((pair) => {
-                const {bodyA, bodyB} = pair;
-                if ((bodyA === this.character.body && bodyB.isStatic) || (bodyB === this.character.body && bodyA.isStatic)) {
-                    // Check if the character stops colliding with a static body (ground or platform)
-                    this.onEarth = false;
-                    console.log("No")
-                }
-            });
-        });
 
 
         this.moving_vector = {
@@ -104,6 +80,9 @@ export default class MainScene extends Phaser.Scene {
 
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
+        //mouse click
+        this.input.on('pointerdown', mouseCallback, this);
+
         this.cursors = this.input.keyboard.createCursorKeys();
         this.character.flipX = true;
         this.jumps = 0;
@@ -125,20 +104,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-
-        // Get the character's current position
-        const {x, y} = this.character;
-
-
-        // Check if the character is within the allowed vertical range
-        // if (y < marginTop) {
-        //     this.character.setY(marginTop);
-        // } else if (y > marginBottom) {
-        //     this.character.setY(marginBottom);
-        // }
-
         const speed = 2;
-        // console.log(time, this.moving_vector)
         this.character.setVelocity(this.moving_vector.x * speed * this.booster,
             this.moving_vector.y * speed * 5);
 
