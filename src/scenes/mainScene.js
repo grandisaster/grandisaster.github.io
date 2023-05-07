@@ -23,7 +23,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
         
         this.load.tilemapTiledJSON('map', 'assets/locations/Castle/castle_map.json');
-this.load.image('menuButton', 'bg/menuButton.png');
+        this.load.image('menuButton', 'bg/menuButton.png');
 
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 48,
@@ -53,24 +53,21 @@ this.load.image('menuButton', 'bg/menuButton.png');
         ground.setCollisionByProperty({ collides: true })
         platforms.setCollisionByProperty({ collides: true })
         columns.setCollisionByProperty({ collides: true })
-        this.matter.world.convertTilemapLayer(ground)
-        this.matter.world.convertTilemapLayer(platforms)
-        this.matter.world.convertTilemapLayer(columns)
+        // this.matter.world.convertTilemapLayer(ground)
+        // this.matter.world.convertTilemapLayer(platforms)
+        // this.matter.world.convertTilemapLayer(columns)
 
 
 
-        // this.character = this.matter.add.sprite(200, 400, 'character');
-        const {width, height} = this.scale;
-        this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
+        this.character = this.physics.add.sprite(200, 400, 'character');
+        // const {width, height} = this.scale;
+        // this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
         this.cameras.scrollX = 200;
         this.cameras.scrollY = 600;
         this.character.setScale(4);
         this.character.setCollideWorldBounds(true);
         this.character.body.setSize(16, 32);
         this.physics.world.setBounds(0, 0, 1200, 720);
-
-        ground.setCollisionByProperty({ collides: true });
-        this.matter.world.convertTilemapLayer(ground);
 
         this.moving_vector = {
             x: 0,
