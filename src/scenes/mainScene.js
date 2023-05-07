@@ -38,23 +38,23 @@ export default class MainScene extends Phaser.Scene {
     create() {
         this.background = this.add.image(0, 0, 'background').setOrigin(0, 0)
         const map = this.make.tilemap({key: 'map'})
-        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground')
+        const ground_ts = map.addTilesetImage('castle_ground', 'c_ground')
         const walls = map.addTilesetImage('castle_walls', 'c_walls')
         const env_obj = map.addTilesetImage('env_objects', 'c_env_ojb')
         const env = map.addTilesetImage('castle_environment', 'c_environment')
 
         map.createLayer('wall_lyr', walls)
-        const ground = map.createLayer('ground_lyr', ground_lyr)
+        const ground = map.createLayer('ground_lyr', ground_ts)
         map.createLayer('env_obj_lyr', env_obj)
         const columns = map.createLayer('env_obj_lyr2', env_obj)
         map.createLayer('env_lyr', env)
-        const platforms = map.createLayer('platform_lyr', ground_lyr)
+        const platforms = map.createLayer('platform_lyr', ground_ts,{tileWidth: 32, tileHeight: 32})
 
         ground.setCollisionByProperty({collides: true})
         platforms.setCollisionByProperty({collides: true})
         columns.setCollisionByProperty({collides: true})
         this.matter.world.convertTilemapLayer(ground)
-        // this.matter.world.convertTilemapLayer(platforms)
+        this.matter.world.convertTilemapLayer(platforms)
         this.matter.world.convertTilemapLayer(columns)
         // this.matter.world.setBounds(0, 0, 1200, 720);
 
@@ -62,9 +62,6 @@ export default class MainScene extends Phaser.Scene {
         this.character = this.matter.add.sprite(200, 400, 'character');
         this.character.setScale(2)
         const {width, height} = this.scale;
-        this.character = this.matter.add.sprite(360, 600, 'character');
-        this.cameras.scrollX = 600;
-        this.cameras.scrollY = 360;
         this.cameras.main.startFollow(this.character, true, 0.05, 0.05);
         const characterBody = this.character.body;
 
@@ -110,18 +107,23 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const marginTop = 250;
-        const marginBottom = 520;
 
-        // Get the character's current position
-        const {x, y} = this.character;
+        // on earth check
+        //|| bodyB.gameObject.layer.name === 'platform_lyr'
+        // this.onEarth = false;
+        // this.matter.world.on('collisionstart', (event, bodyA, bodyB) => {
+        //     if (bodyA.gameObject === this.character) {
+        //         if (bodyB.gameObject.layer.name === 'ground_lyr') { 
+        //             this.onEarth = true;
+        //             this.jumps = 2;
+        //         }
+        //     }
+        // });
 
-
-        // Check if the character is within the allowed vertical range
-        if (y < marginTop) {
-            this.character.setY(marginTop);
-        } else if (y > marginBottom) {
-            this.character.setY(marginBottom);
+        //jump control
+        if (this.cursors.up.isDown && this.jumps !== 0) {
+            this.moving_vector.y = -1;
+            this.jumps -= 1;
         }
 
         const speed = 2;
