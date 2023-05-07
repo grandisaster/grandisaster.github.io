@@ -49,9 +49,9 @@ export default class MainScene extends Phaser.Scene {
         map.createLayer('env_lyr', env)
         const platforms = map.createLayer('platform_lyr', ground_lyr)
 
-        ground.setCollisionByProperty({collides: false})
-        platforms.setCollisionByProperty({collides: false})
-        columns.setCollisionByProperty({collides: false})
+        ground.setCollisionByProperty({collides: true})
+        platforms.setCollisionByProperty({collides: true})
+        columns.setCollisionByProperty({collides: true})
         this.matter.world.convertTilemapLayer(ground)
         // this.matter.world.convertTilemapLayer(platforms)
         this.matter.world.convertTilemapLayer(columns)
