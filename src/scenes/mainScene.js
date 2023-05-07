@@ -53,7 +53,7 @@ export default class MainScene extends Phaser.Scene {
         platforms.setCollisionByProperty({collides: true})
         columns.setCollisionByProperty({collides: true})
         this.matter.world.convertTilemapLayer(ground)
-        this.matter.world.convertTilemapLayer(platforms)
+        // this.matter.world.convertTilemapLayer(platforms)
         this.matter.world.convertTilemapLayer(columns)
         // this.matter.world.setBounds(0, 0, 1200, 720);
 
