@@ -6,7 +6,7 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
         scene.add.existing(this);
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         const width = 32; // Adjust the width as needed
-        const height = 32; // Adjust the height as needed
+        const height = 24; // Adjust the height as needed
         const options = {
             chamfer: {},
             frictionAir: 0.1,
@@ -19,23 +19,26 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
         this.setFixedRotation(); // Prevent the body from rotating
 
         // Set up player properties
-        this.jumpForce = -300; // Adjust the jump force as needed
+        this.jumpForce = -25; // Adjust the jump force as needed
         this.isJumping = false;
 
         this.health = health;
         this.damage = damage;
+
+        this.moving_vector = {
+            x: 0,
+            y: 0
+        };
+        this.booster = 1;
+        this.onEarth = false;
     }
 
-    update() {
-        // Update logic for the player
-        if (this.isJumping && this.body.onFloor()) {
-            this.isJumping = false;
-        }
+    update(args) {
     }
 
     jump() {
-        if (!this.isJumping && this.body.onFloor()) {
-            this.body.setVelocityY(this.jumpForce);
+        if (!this.isJumping && this.onEarth) {
+            this.setVelocity(this.body.velocity.x, this.jumpForce);
             this.isJumping = true;
         }
     }

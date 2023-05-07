@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     moving_x() {
-        return this.moving_vector.x !== 0;
+        return this.character.moving_vector.x !== 0;
     }
 
     preload() {
@@ -69,12 +69,6 @@ export default class MainScene extends Phaser.Scene {
         this.matter.world.setBounds(0, 0, 1200, 720);
 
 
-        this.moving_vector = {
-            x: 0,
-            y: 0
-        };
-        this.booster = 1;
-
         loadAnimations(this);
 
         this.input.keyboard.on('keydown', keyDownCallback, this);
@@ -84,7 +78,6 @@ export default class MainScene extends Phaser.Scene {
 
         this.cursors = this.input.keyboard.createCursorKeys();
         this.character.flipX = true;
-        this.jumps = 0;
 
 
         this.menuButton = this.add.image(20, 20, 'menuButton').setOrigin(0, 0).setScale(0.05)
@@ -103,17 +96,21 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const speed = 2;
-        this.character.setVelocity(this.moving_vector.x * speed * this.booster,
-            this.moving_vector.y * speed * 5);
+        const speed = 2.5;
 
-        if (Math.abs(this.moving_vector.y - 0.5) > 0.00001 && this.jumps !== 0) {
-            this.moving_vector.y += 0.1;
+        if(Math.abs(this.character.body.velocity.y) < 0.9) {
+            this.character.setVelocity(this.character.body.x, 0);
+            this.character.onEarth = true;
         } else {
-            this.jumps = 0;
-            if (this.onEarth) {
-                this.moving_vector.y = 0;
-            }
+            this.character.onEarth = false;
         }
+
+        console.log(this.character.onEarth);
+
+        if (this.character.isJumping && this.character.onEarth) {
+            this.character.isJumping = false;
+        }
+
+        this.character.setVelocity(this.character.moving_vector.x * speed * this.character.booster, this.character.body.velocity.y);
     }
 }
