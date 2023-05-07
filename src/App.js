@@ -34,7 +34,7 @@ const Game = ({setIsGame}) => {
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: {y: 200},
+                    gravity: {y: 10},
                     debug: true
                 }
             }

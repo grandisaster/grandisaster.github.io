@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
 import {loadAnimations} from "../assets/animations/hero";
+import Hero from '../classes/hero/Hero';
 import React from 'react';
 
 
@@ -30,8 +31,6 @@ export default class MainScene extends Phaser.Scene {
             margin: 1,
             spacing: 1
         });
-
-
     }
 
     create() {
@@ -57,7 +56,8 @@ export default class MainScene extends Phaser.Scene {
         this.matter.world.convertTilemapLayer(columns)
 
 
-        this.character = this.matter.add.sprite(200, 400, 'character');
+        // this.character = this.matter.add.sprite(200, 400, 'character').setFixedRotation()
+        this.character = new Hero(this, 200, 400, 'character');
         this.character.setScale(2)
         const {width, height} = this.scale;
         // this.character = this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
@@ -107,19 +107,17 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const marginTop = 250;
-        const marginBottom = 520;
 
         // Get the character's current position
         const {x, y} = this.character;
 
 
         // Check if the character is within the allowed vertical range
-        if (y < marginTop) {
-            this.character.setY(marginTop);
-        } else if (y > marginBottom) {
-            this.character.setY(marginBottom);
-        }
+        // if (y < marginTop) {
+        //     this.character.setY(marginTop);
+        // } else if (y > marginBottom) {
+        //     this.character.setY(marginBottom);
+        // }
 
         const speed = 2;
         // console.log(time, this.moving_vector)

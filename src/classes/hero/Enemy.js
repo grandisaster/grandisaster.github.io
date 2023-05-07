@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 
-export default class Hero extends Phaser.Physics.Matter.Sprite {
+export default class Enemy extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, texture, health = 100, damage = 33) {
         super(scene, x, y, texture);
         // this.body = new Phaser.Physics.Arcade.Body(scene, this);
+        // scene.physics.add.existing(this);
         scene.matter.add.existing(this);
 
         // Set up player properties
