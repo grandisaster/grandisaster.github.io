@@ -1,0 +1,74 @@
+.menu-background {
+
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 0;
+  
+    background-image: url('../../public/assets/locations/Backgrounds/background_castle.png');
+  }
+  
+  .menu-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    border: 2px solid #ff0000;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+    font-family: 'PressStart2P';
+  }
+  
+  .button-container {
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+
+  }
+  
+  .menu-button {
+    font-size: 24px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff0000;
+    color: #ffffff;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-family: 'PressStart2P';
+    border-radius: 5px;
+  }
+  
+  .menu-button:hover {
+    background-color: #ffffff;
+    color: #ff0000;
+    border: 2px solid #ff0000;
+  }
+  
+.balance-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;  
+    border-radius: 5px;
+  }
+
+  .balance-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    
+  }
