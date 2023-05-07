@@ -103,7 +103,7 @@ export default class MainScene extends Phaser.Scene {
                     }
                 }
             );
-
+        this.menuButton.setScrollFactor(0);
     }
 
     update(time, delta) {
