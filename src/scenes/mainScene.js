@@ -23,7 +23,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
         
         this.load.tilemapTiledJSON('map', 'assets/locations/Castle/castle_map.json');
-this.load.image('menuButton', 'bg/menuButton.png');
+        this.load.image('menuButton', 'bg/menuButton.png');
 
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 48,
@@ -53,36 +53,21 @@ this.load.image('menuButton', 'bg/menuButton.png');
         ground.setCollisionByProperty({ collides: true })
         platforms.setCollisionByProperty({ collides: true })
         columns.setCollisionByProperty({ collides: true })
-        this.matter.world.convertTilemapLayer(ground)
-        this.matter.world.convertTilemapLayer(platforms)
-        this.matter.world.convertTilemapLayer(columns)
+        // this.matter.world.convertTilemapLayer(ground)
+        // this.matter.world.convertTilemapLayer(platforms)
+        // this.matter.world.convertTilemapLayer(columns)
 
 
 
-        // this.character = this.matter.add.sprite(200, 400, 'character');
-        const {width, height} = this.scale;
-        this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
+        this.character = this.physics.add.sprite(200, 400, 'character');
+        // const {width, height} = this.scale;
+        // this.matter.add.sprite(width * 0.5, height * 0.5, 'character');
         this.cameras.scrollX = 200;
         this.cameras.scrollY = 600;
         this.character.setScale(4);
         this.character.setCollideWorldBounds(true);
         this.character.body.setSize(16, 32);
         this.physics.world.setBounds(0, 0, 1200, 720);
-
-        const map = this.make.tilemap({ key: 'tilemap' });
-        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground');
-        const wall_lyr = map.addTilesetImage('castle_walls', 'c_walls');
-        const env_obj_lyr = map.addTilesetImage('env_objects', 'c_env_ojb');
-        const env_lyr = map.addTilesetImage('castle_environment', 'c_environment');
-
-        const wall = map.createLayer('wall_lyr', wall_lyr);
-        const ground = map.createLayer('ground_lyr', ground_lyr);
-        const env_obj = map.createLayer('env_obj_lyr', env_obj_lyr);
-        const env_obj2 = map.createLayer('env_obj_lyr2', env_obj_lyr);
-        const env = map.createLayer('env_lyr', env_lyr);
-
-        ground.setCollisionByProperty({ collides: true });
-        this.matter.world.convertTilemapLayer(ground);
 
         this.moving_vector = {
             x: 0,
