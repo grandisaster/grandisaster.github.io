@@ -56,7 +56,6 @@ export default class MainScene extends Phaser.Scene {
         // this.matter.world.convertTilemapLayer(platforms)
         this.matter.world.convertTilemapLayer(columns)
 
-
         // this.character = this.matter.add.sprite(200, 400, 'character').setFixedRotation()
         this.character = new Hero(this, 200, 400, 'character');
         this.character.setScale(2);
