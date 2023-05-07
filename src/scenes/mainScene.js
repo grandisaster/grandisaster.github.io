@@ -8,6 +8,7 @@ import React from 'react';
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({key: 'MainScene'})
+        this.onEarth = false;
     }
 
     moving_x() {
@@ -69,11 +70,28 @@ export default class MainScene extends Phaser.Scene {
         characterBody.restitution = 0.9;
         characterBody.friction = 0;
         characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
-
-// Примените границы мира Matter.js
         this.matter.world.setBounds(0, 0, 1200, 720);
-        // this.character.body.setSize(16, 32);
-        console.log(this.character.body);
+        this.matter.world.on('collisionstart', (event) => {
+            event.pairs.forEach((pair) => {
+                const {bodyA, bodyB} = pair;
+                if ((bodyA === this.character.body && bodyB.isStatic) || (bodyB === this.character.body && bodyA.isStatic)) {
+                    // Check if the character collides with a static body (ground or platform)
+                    this.onEarth = true;
+                    console.log("Yes")
+                }
+            });
+        });
+
+        this.matter.world.on('collisionend', (event) => {
+            event.pairs.forEach((pair) => {
+                const {bodyA, bodyB} = pair;
+                if ((bodyA === this.character.body && bodyB.isStatic) || (bodyB === this.character.body && bodyA.isStatic)) {
+                    // Check if the character stops colliding with a static body (ground or platform)
+                    this.onEarth = false;
+                    console.log("No")
+                }
+            });
+        });
 
 
         this.moving_vector = {
