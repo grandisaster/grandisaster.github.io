@@ -1,28 +1,32 @@
 import Phaser from 'phaser';
-import Hero from '../classes/hero/Hero'
 import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
+import {mouseCallback} from "./mainScene/mouseCallback";
 import {loadAnimations} from "../assets/animations/hero";
-import React from 'react';
+import Hero from '../classes/hero/Hero';
+import Enemy from '../classes/hero/Enemy';
 
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super({key: 'MainScene'})
+        this.onEarth = false;
     }
 
     moving_x() {
-        return this.moving_vector.x !== 0;
+        return this.character.moving_vector.x !== 0;
     }
 
     preload() {
-        this.load.image('menuButton', 'bg/menuButton.png'); 
-        this.load.image('background', 'assets/locations/Backgrounds/background_castle.jpg');
+        this.load.image('menuButton', 'bg/menuButton.png');
+        this.load.image('background', 'assets/locations/Backgrounds/background_castle.png');
         this.load.image('c_ground', 'assets/locations/Castle/ground.png');
         this.load.image('c_walls', 'assets/locations/Castle/walls.png');
         this.load.image('c_environment', 'assets/locations/Castle/environment.png');
         this.load.image('c_env_ojb', 'assets/locations/Castle/env_objects.png');
-        
-        this.load.tilemapTiledJSON('tilemap', 'assets/locations/Castle/castle_map.json');
+
+        this.load.tilemapTiledJSON('map', 'assets/locations/Castle/castle_map.json');
+        this.load.image('menuButton', 'bg/menuButton.png');
+
         this.load.spritesheet('character', 'character/player.png', {
             frameWidth: 48,
             frameHeight: 48,
@@ -30,46 +34,74 @@ export default class MainScene extends Phaser.Scene {
             spacing: 1
         });
 
-
+        this.load.spritesheet('enemy', 'assets/enemies/bosses/Archer/spritesheet.png', {
+            frameWidth: 48,
+            frameHeight: 48,
+            margin: 1,
+            spacing: 1
+        });
     }
 
     create() {
+        this.background = this.add.image(0, 0, 'background').setOrigin(0, 0)
+        const map = this.make.tilemap({key: 'map'})
+        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground')
+        const walls = map.addTilesetImage('castle_walls', 'c_walls')
+        const env_obj = map.addTilesetImage('env_objects', 'c_env_ojb')
+        const env = map.addTilesetImage('castle_environment', 'c_environment')
 
-        this.background = this.add.image(0, 0, 'background').setOrigin(0, 0);
-        this.character = this.physics.add.sprite(200, 400, 'character');
-        // this.character = new Hero(this, 200, 400, 'character');
-        this.character.setScale(4);
-        this.character.setCollideWorldBounds(true);
-        this.character.body.setSize(16, 32);
+        map.createLayer('wall_lyr', walls)
+        const ground = map.createLayer('ground_lyr', ground_lyr)
+        map.createLayer('env_obj_lyr', env_obj)
+        const columns = map.createLayer('env_obj_lyr2', env_obj)
+        map.createLayer('env_lyr', env)
+        const platforms = map.createLayer('platform_lyr', ground_lyr)
 
-        const map = this.make.tilemap({ key: 'tilemap' });
-        const ground_lyr = map.addTilesetImage('castle_ground', 'c_ground');
-        const wall_lyr = map.addTilesetImage('castle_walls', 'c_walls');
-        const env_obj_lyr = map.addTilesetImage('env_objects', 'c_env_ojb');
-        const env_lyr = map.addTilesetImage('castle_environment', 'c_environment');
+        ground.setCollisionByProperty({collides: true})
+        platforms.setCollisionByProperty({collides: true})
+        columns.setCollisionByProperty({collides: true})
+        this.matter.world.convertTilemapLayer(ground)
+        // this.matter.world.convertTilemapLayer(platforms)
+        this.matter.world.convertTilemapLayer(columns)
 
-        const wall = map.createLayer('wall_lyr', wall_lyr);
-        const ground = map.createLayer('ground_lyr', ground_lyr);
-        const env_obj = map.createLayer('env_obj_lyr', env_obj_lyr);
-        const env_obj2 = map.createLayer('env_obj_lyr2', env_obj_lyr);
-        const env = map.createLayer('env_lyr', env_lyr);
+        // this.character = this.matter.add.sprite(200, 400, 'character').setFixedRotation()
+        this.character = new Hero(this, 400, 200, 'character');
+        this.character.setScale(2);
+        this.character.setFixedRotation();
+        const characterBody = this.character.body;
 
-        ground.setCollisionByProperty({ collides: true });
-        this.matter.world.convertTilemapLayer(ground);
+        characterBody.collisionFilter.category = 1;
+        characterBody.restitution = 0.9;
+        characterBody.friction = 0;
+        characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
+        this.matter.world.setBounds(0, 0, 1200, 720);
 
-        this.moving_vector = {
-            x: 0,
-            y: 0
-        };
-        this.booster = 1;
+
+        this.enemyGroup = this.add.group();
+
+        this.enemy = new Enemy(this, 100, 400, 'enemy');
+        this.enemyGroup.add(this.enemy);
+        this.enemy.setScale(2);
+        this.enemy.setFixedRotation();
+        const enemyBody = this.enemy.body;
+
+        enemyBody.collisionFilter.category = 1;
+        enemyBody.restitution = 0.9;
+        enemyBody.friction = 0;
+        enemyBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
+        this.matter.world.setBounds(0, 0, 1200, 720);
+
+        this.alive_enemies = 1;
 
         loadAnimations(this);
 
         this.input.keyboard.on('keydown', keyDownCallback, this);
         this.input.keyboard.on('keyup', keyUpCallback, this);
+        //mouse click
+        this.input.on('pointerdown', mouseCallback, this);
+
         this.cursors = this.input.keyboard.createCursorKeys();
         this.character.flipX = true;
-        this.jumps = 0;
 
 
         this.menuButton = this.add.image(20, 20, 'menuButton').setOrigin(0, 0).setScale(0.05)
@@ -87,33 +119,47 @@ export default class MainScene extends Phaser.Scene {
 
     }
 
+    destroyEnemy() {
+        this.alive_enemies -= 1;
+    }
+
     update(time, delta) {
-        const marginTop = 250;
-        const marginBottom = 520;
+        const speed = 7.5;
 
-        // Get the character's current position
-        const {x, y} = this.character;
-
-        // Check if the character is within the allowed vertical range
-        if (y < marginTop) {
-            this.character.setY(marginTop);
-        } else if (y > marginBottom) {
-            this.character.setY(marginBottom);
+        if(Math.abs(this.character.body.velocity.y) < 0.9) {
+            this.character.setVelocity(this.character.body.x, 0);
+            this.character.onEarth = true;
+        } else {
+            this.character.onEarth = false;
         }
 
-        const speed = 200;
-        // console.log(time, this.moving_vector)
-        this.character.setVelocity(this.moving_vector.x * speed * this.booster,
-            this.moving_vector.y * speed * 5);
-        console.log(this.moving_vector)
+        if (this.character.isJumping && this.character.onEarth) {
+            this.character.isJumping = false;
+        }
 
-        if (Math.abs(this.moving_vector.y - 0.5) > 0.00001 && this.jumps !== 0) {
-            this.moving_vector.y += 0.1;
-        } else {
-            this.jumps = 0;
-            if (this.onEarth) {
-                this.moving_vector.y = 0;
+        if(this.alive_enemies === 0) {
+            this.character.level += 1;
+            this.character.damage = 100 + 60 * (this.character.level - 1);
+            this.alive_enemies = 1 + 2 * (this.character.level - 1);
+            this.enemyGroup.clear();
+
+            console.log(`New level: ${this.character.level}`);
+            console.log(`New damage: ${this.character.damage}`);
+
+            for(let i = 0; i < this.alive_enemies; i += 1) {
+                let currentEnemy = new Enemy(this, 100 + Math.floor(Math.random() * 1000), Math.floor(Math.random() * 500) + 150, 'enemy', 100 + 70 * (this.character.level) + Math.floor(Math.random() * 40));
+                currentEnemy.setScale(2);
+                currentEnemy.setFixedRotation();
+                const enemyBody = currentEnemy.body;
+
+                enemyBody.collisionFilter.category = 1;
+                enemyBody.restitution = 0.9;
+                enemyBody.friction = 0;
+                enemyBody.collisionFilter.mask = 0x0001;
+                this.enemyGroup.add(currentEnemy);
             }
         }
+
+        this.character.setVelocity(this.character.moving_vector.x * speed * this.character.booster, this.character.body.velocity.y);
     }
 }

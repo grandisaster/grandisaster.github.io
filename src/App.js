@@ -32,9 +32,9 @@ const Game = ({setIsGame}) => {
             },
             scene: [PreloadScene, mainScene],
             physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: {y: 0},
+                default: 'matter',
+                matter: {
+                    gravity: {y: 5},
                     debug: false
                 }
             }

@@ -40,4 +40,13 @@ export function loadAnimations(context) {
         frameRate: 10,
         repeat: 0
     });
+
+    context.anims.create({
+        key: 'fight-right',
+        frames: context.anims.generateFrameNumbers('character', {start: 35, end: 38}),
+        frameRate: 24,
+        repeat: 0
+    });
+
+
 }
