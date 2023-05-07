@@ -2,9 +2,9 @@ import Phaser from "phaser";
 
 export default class Hero extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, texture, health = 100, damage = 33) {
-        super(scene, x, y, texture);
-        // this.body = new Phaser.Physics.Arcade.Body(scene, this);
-        scene.matter.add.existing(this);
+        super(scene.matter.world, x, y, texture);
+        scene.add.existing(this);
+        this.setExistingBody(this.body);
 
         // Set up player properties
         this.jumpForce = -300; // Adjust the jump force as needed
