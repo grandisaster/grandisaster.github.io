@@ -3,6 +3,7 @@ export function mouseCallback(pointer) {
         case 0:
             this.character.anims.stop();
             this.character.anims.startAnimation('fight-right');
+            this.character.attack();
             break;
         default:
     }

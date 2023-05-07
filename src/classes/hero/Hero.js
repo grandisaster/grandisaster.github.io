@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import Enemy from "./Enemy";
 
 export default class Hero extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, texture, health = 100, damage = 33) {
@@ -9,9 +10,9 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
         const height = 32; // Adjust the height as needed
         const options = {
             chamfer: {},
-            frictionAir: 0.1,
+            frictionAir: 0.2,
         };
-        const hitbox = Bodies.rectangle(400, 200, width, height, options);
+        const hitbox = Bodies.rectangle(200, 200, width, height, options);
         this.setExistingBody(hitbox);
 
         // Set up player properties
@@ -19,7 +20,7 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
         this.setFixedRotation(); // Prevent the body from rotating
 
         // Set up player properties
-        this.jumpForce = -25; // Adjust the jump force as needed
+        this.jumpForce = -55; // Adjust the jump force as needed
         this.isJumping = false;
 
         this.health = health;
@@ -34,6 +35,19 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
     }
 
     update(args) {
+    }
+
+    attack() {
+        // Логика атаки
+        const enemies = this.scene.enemyGroup.getChildren();
+        enemies.forEach((enemy) => {
+            // Проверяем расстояние между игроком и врагом
+            const distance = Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y);
+            if (distance < 100) {
+                // Игрок находится достаточно близко к врагу для нанесения удара
+                enemy.takeDamage(this.damage);
+            }
+        });
     }
 
     jump() {

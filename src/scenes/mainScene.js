@@ -3,6 +3,7 @@ import {keyDownCallback, keyUpCallback} from "./mainScene/keyboardCallback";
 import {mouseCallback} from "./mainScene/mouseCallback";
 import {loadAnimations} from "../assets/animations/hero";
 import Hero from '../classes/hero/Hero';
+import Enemy from '../classes/hero/Enemy';
 
 
 export default class MainScene extends Phaser.Scene {
@@ -27,6 +28,13 @@ export default class MainScene extends Phaser.Scene {
         this.load.image('menuButton', 'bg/menuButton.png');
 
         this.load.spritesheet('character', 'character/player.png', {
+            frameWidth: 48,
+            frameHeight: 48,
+            margin: 1,
+            spacing: 1
+        });
+
+        this.load.spritesheet('enemy', 'assets/enemies/bosses/Archer/spritesheet.png', {
             frameWidth: 48,
             frameHeight: 48,
             margin: 1,
@@ -57,7 +65,7 @@ export default class MainScene extends Phaser.Scene {
         this.matter.world.convertTilemapLayer(columns)
 
         // this.character = this.matter.add.sprite(200, 400, 'character').setFixedRotation()
-        this.character = new Hero(this, 200, 400, 'character');
+        this.character = new Hero(this, 400, 200, 'character');
         this.character.setScale(2);
         this.character.setFixedRotation();
         const characterBody = this.character.body;
@@ -67,6 +75,22 @@ export default class MainScene extends Phaser.Scene {
         characterBody.friction = 0;
         characterBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
         this.matter.world.setBounds(0, 0, 1200, 720);
+
+
+        this.enemyGroup = this.add.group();
+
+        this.enemy = new Enemy(this, 100, 400, 'enemy');
+        this.enemyGroup.add(this.enemy);
+        this.enemy.setScale(2);
+        this.enemy.setFixedRotation();
+        const enemyBody = this.enemy.body;
+
+        enemyBody.collisionFilter.category = 1;
+        enemyBody.restitution = 0.9;
+        enemyBody.friction = 0;
+        enemyBody.collisionFilter.mask = 0x0001; // Здесь 0x0001 представляет категорию столкновений, с которой персонаж может сталкиваться
+        this.matter.world.setBounds(0, 0, 1200, 720);
+
 
 
         loadAnimations(this);
@@ -96,7 +120,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        const speed = 2.5;
+        const speed = 7.5;
 
         if(Math.abs(this.character.body.velocity.y) < 0.9) {
             this.character.setVelocity(this.character.body.x, 0);
@@ -104,8 +128,6 @@ export default class MainScene extends Phaser.Scene {
         } else {
             this.character.onEarth = false;
         }
-
-        console.log(this.character.onEarth);
 
         if (this.character.isJumping && this.character.onEarth) {
             this.character.isJumping = false;
