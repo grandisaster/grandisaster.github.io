@@ -6,7 +6,7 @@ export default class Hero extends Phaser.Physics.Matter.Sprite {
         scene.add.existing(this);
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         const width = 32; // Adjust the width as needed
-        const height = 24; // Adjust the height as needed
+        const height = 32; // Adjust the height as needed
         const options = {
             chamfer: {},
             frictionAir: 0.1,
